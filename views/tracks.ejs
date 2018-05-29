@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		h5 {
+			margin: 0;
+			display: inline-block;
+		}
+
+		div {
+			margin-left: 25%;
+			width: 50%;
+			padding: 5px;
+			border: 1px solid black;
+		}
+
+		span{
+			float: right;
+			padding-left: 10%;
+			font-size: 12px;
+		}
+	</style>
+</head>
+<body>
+		<% tracks.forEach((track) => { %>
+			<div>
+				<h5><%=track.name%></h5>
+				<span> <a href="/playlists/<%=playlist%>/add/<%=track.uri%>">add</a></span>
+				<span> <%= track.artists[0].name%></span>
+			</div>
+		<% }) %>
+
+
+		<% if (page != 1) { %>
+			<a href="<%=parseInt(page) - 1%>">prev</a>
+		<% } %>
+		<a href="<%=parseInt(page) + 1%>">next</a>
+</body>
+</html>
