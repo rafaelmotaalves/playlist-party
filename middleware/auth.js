@@ -9,7 +9,7 @@ const clientSecret = process.env.CLIENT_SECRET;
 module.exports = (req, res, next) => {
   const auth = req.cookies.Auth;
   if (!auth) {
-    res.render('login.ejs');
+    res.send('no auth');
   } else if (auth.expiresAt <= Date.now()) {
     const authOptions = {
       grant_type: 'refresh_token',

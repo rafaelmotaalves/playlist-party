@@ -27,7 +27,11 @@ module.exports = {
             })),
           }
         ));
-        res.render('tracks.ejs', { tracks: refactoredTracks, page: req.params.page, playlist: req.params.playlist_id });
+        res.json({
+          tracks: refactoredTracks,
+          page: req.params.page,
+          playlist: req.params.playlist_id,
+        });
       })
       .catch(err => console.log(err.response));
   },

@@ -73,7 +73,7 @@ module.exports = {
           album: tracks.track.album.name,
           artists: tracks.track.artists[0].name,
         }));
-        res.render('playlist.ejs', {
+        res.json({
           name: response.data.name,
           image: response.data.images[1] ? response.data.images[1].url : null,
           owner: {

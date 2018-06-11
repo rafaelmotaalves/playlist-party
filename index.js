@@ -3,8 +3,11 @@ const cookieParser = require('cookie-parser');
 const checkToken = require('./middleware/auth');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,4 +30,4 @@ app.use('/', checkToken, userRoutes);
 app.get('/', checkToken, home);
 app.use('/playlists', checkToken, playlistRoutes);
 
-app.listen(3001);
+app.listen(3000);

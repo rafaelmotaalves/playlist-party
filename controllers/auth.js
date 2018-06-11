@@ -13,27 +13,27 @@ module.exports = {
     const state = generateRandomString(16);
     res.cookie('spotifyAuthState', state);
 
-    console.log('login');
-    res.redirect(`https://accounts.spotify.com/authorize?${querystring.stringify({
-      client_id: process.env.CLIENT_ID,
-      response_type: 'code',
-      redirect_uri: `${url}/callback`,
-      scope: 'user-read-private user-read-email playlist-modify-private playlist-modify-public user-library-read',
+    res.json({
+      url: `https://accounts.spotify.com/authorize?${querystring.stringify({
+        client_id: process.env.CLIENT_ID,
+        response_type: 'code',
+        redirect_uri: `${url}/callback`,
+        scope: 'user-read-private user-read-email playlist-modify-private playlist-modify-public user-library-read',
+        state,
+      })}`,
       state,
-    })}`);
+    });
   },
 
   callback: (req, res) => {
+    const { code, state, storedState } = req.query;
     const authOptions = {
-      code: req.query.code,
+      code,
       redirect_uri: `${url}/callback`,
       grant_type: 'authorization_code',
     };
-
-    const storedState = req.cookies.spotifyAuthState;
-    const { state } = req.query;
-    if (state && storedState === state) {
-      const authorization = {};
+    const authorization = {};
+    if (storedState && state === storedState) {
       axios.post('https://accounts.spotify.com/api/token', querystring.stringify(authOptions), {
         headers: {
           Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
@@ -54,18 +54,12 @@ module.exports = {
           authorization.name = response.data.display_name;
           authorization.id = response.data.id;
           authorization.img = response.data.images[0].url;
-          res.cookie('Auth', authorization);
-          res.redirect('/');
+          res.json(authorization);
         })
-        .catch(err => console.log(err));
+        .catch(err => res.json(err));
     } else {
-      res.send('state-mismatch');
+      res.json('state-mismatch');
     }
-  },
-
-  logout: (req, res) => {
-    res.clearCookie('Auth');
-    res.redirect('/');
   },
 
 };
