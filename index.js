@@ -1,5 +1,4 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const checkToken = require('./middleware/auth');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -8,7 +7,6 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors());
-app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
