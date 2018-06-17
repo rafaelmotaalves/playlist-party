@@ -1,5 +1,4 @@
 const express = require('express');
-const checkToken = require('./middleware/auth');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -14,7 +13,7 @@ mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/spotify-party').c
 
 const authRoutes = require('./routes/auth');
 const playlistRoutes = require('./routes/playlist');
-const userRoutes = require('./routes/user');
+const trackRoutes = require('./routes/track');
 
 // set up view engine as ejs
 app.set('view engine', 'ejs');
@@ -24,8 +23,8 @@ const home = (req, res) => {
 };
 
 app.use('/', authRoutes);
-app.use('/', checkToken, userRoutes);
-app.get('/', checkToken, home);
-app.use('/playlists', checkToken, playlistRoutes);
+app.use('/', trackRoutes);
+app.get('/', home);
+app.use('/playlists', playlistRoutes);
 
 app.listen(3000);

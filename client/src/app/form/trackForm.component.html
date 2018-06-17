@@ -1,0 +1,17 @@
+
+<div class = "container">
+   <h1>Create Playlist</h1>
+   <form>
+         <label for = "productid">Name</label>
+      <div class = "form-group">
+         <input (keydown) = 'getTracks( model.query + ($event.key.length > 1 ? "": $event.key))' type = "text" class = "form-control" id = "productid" required
+            [(ngModel)] = "model.query" name = "id">
+      </div>
+   </form>
+</div>
+
+<ul *ngIf = 'tracks.length > 0'>
+  <li *ngFor = 'let track of tracks'>
+    {{track.name}} - <strong>{{track.artists[0]}}</strong>
+  </li>
+</ul>

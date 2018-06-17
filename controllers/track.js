@@ -35,5 +35,19 @@ module.exports = {
       })
       .catch(err => console.log(err.response));
   },
+  searchTracks: (req, res) => {
+    const auth = req.headers.authorization;
+    axios.get(`https://api.spotify.com/v1/search?q=${req.query.q}&type=track`, {
+      headers: {
+        Authorization: auth,
+      },
+    })
+      .then(foundTracks => res.json(foundTracks.data.tracks.items.map(track => ({
+        name: track.name,
+        uri: track.uri,
+        artists: track.artists.map(artist => artist.name),
+      }))))
+      .catch(err => res.json(err.data));
+  },
 
 };

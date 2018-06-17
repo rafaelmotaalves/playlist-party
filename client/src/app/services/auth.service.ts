@@ -25,8 +25,10 @@ export class AuthService {
   callback(query) {
     const storedState = this.cookie.get('spotifyAuthState');
     this.cookie.remove('spotifyAuthState');
+    console.log('AA');
     return this.http.get('http://localhost:3000/callback?' + query + '&storedState=' + storedState)
       .subscribe(data => {
+        console.log(data.json());
         this.cookie.putObject('auth', data.json());
         this.router.navigate(['/']);
       });

@@ -25,15 +25,18 @@ module.exports = {
   },
 
   createPlaylist: (req, res) => {
+    const reqData = JSON.parse(req.body.data);
     const data = {
-      name: req.body.name,
+      name: reqData.name,
       public: false,
       collaborative: true,
-      description: req.body.description,
+      description: reqData.description,
     };
-    axios.post(`https://api.spotify.com/v1/users/${req.auth.id}/playlists`, data, {
+    const auth = req.headers.authorization;
+    const userId = req.query.id;
+    axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, data, {
       headers: {
-        Authorization: `Bearer ${req.auth.accessToken}`,
+        Authorization: auth,
         'content-type': 'application/json',
       },
     })
@@ -43,13 +46,12 @@ module.exports = {
           description: data.description,
           img: null,
           spotifyId: response.data.id,
-          owner: req.auth.id,
+          owner: userId,
         };
-
         return Playlist.create(newPlaylist);
       }))
       .then(createdPlaylist => res.send(createdPlaylist))
-      .catch(err => res.send(err.response.data));
+      .catch(err => res.send(err.response.data.error));
   },
 
   deletePlaylist: (req, res) => {
