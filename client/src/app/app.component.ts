@@ -4,6 +4,8 @@ import { PlaylistService } from './services/playlist.service';
 import { TracksService } from './services/tracks.service';
 import { PlayListFormComponent } from './form/playlistForm.component';
 import { CookieService } from 'ngx-cookie';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
@@ -12,20 +14,20 @@ import { CookieService } from 'ngx-cookie';
   providers: [AuthService, PlaylistService, TracksService],
 })
 export class AppComponent {
+  url: string = window.location.href;
+
   constructor(
     private auth: AuthService,
     private playlist: PlaylistService,
     private cookie: CookieService,
     private tracks: TracksService,
+    private router: Router,
   ) {}
 
-  url: string = window.location.href;
-  title = 'Testando Angular :)';
-
-  isLoggedIn(): boolean {
-    return this.cookie.getObject('auth') !== undefined;
+  ngOnInit() {
+    if (!this.auth.isLoggedIn() && !window.location.href.includes('callback')) {
+      this.router.navigate(['/login']);
+    }
   }
-
-  
 
 }

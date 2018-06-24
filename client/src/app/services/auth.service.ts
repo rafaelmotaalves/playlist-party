@@ -23,20 +23,25 @@ export class AuthService {
   }
 
   callback(query) {
-    const storedState = this.cookie.get('spotifyAuthState');
+    const storedState = this.cookie.getObject('spotifyAuthState');
     this.cookie.remove('spotifyAuthState');
-    console.log('AA');
-    return this.http.get('http://localhost:3000/callback?' + query + '&storedState=' + storedState)
+    const url = 'http://localhost:3000/callback?' + query.replace('#_=_', '') + '&storedState=' + storedState;
+    console.log(url);
+    return this.http.get(url)
       .subscribe(data => {
         console.log(data.json());
         this.cookie.putObject('auth', data.json());
-        this.router.navigate(['/']);
+        this.router.navigate(['']);
       });
   }
 
   logout() {
     console.log(this.cookie.getObject('auth'));
     this.cookie.remove('auth');
-    this.router.navigate(['/']);
+    this.router.navigate(['']);
+  }
+
+  isLoggedIn(): boolean {
+    return this.cookie.getObject('auth') !== undefined;
   }
 }

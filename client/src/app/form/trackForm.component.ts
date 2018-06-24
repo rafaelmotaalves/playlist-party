@@ -1,21 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { TracksService } from '../services/tracks.service';
+import { PlaylistService } from '../services/playlist.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'track-form',
+  selector: 'app-track',
   templateUrl: 'trackForm.component.html',
-  providers: [TracksService],
+  styleUrls: ['./trackForm.component.css'],
+  providers: [TracksService, PlaylistService],
 })
 
 export class TrackFormComponent {
+
+
+  @Input() playlistId: string;
+
+  @Output() addTrackEvent = new EventEmitter<string>();
 
   tracks = [];
   model = { query: '' };
   constructor(
     private track: TracksService,
+    private _playlist: PlaylistService,
+    private route: ActivatedRoute,
   ) { }
 
-  getTracks(query: string) {
+  playlist = {};
+
+  searchTracks(query: string) {
     if (query.length <  2) {
       this.tracks = [];
     } else {
@@ -23,4 +35,10 @@ export class TrackFormComponent {
         .subscribe( data => this.tracks = data);
     }
   }
+
+  addTrack(id, trackUri, track) {
+    this._playlist.addTrack(id, trackUri);
+    this.addTrackEvent.emit(track);
+  }
+
 }

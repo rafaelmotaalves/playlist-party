@@ -11,8 +11,6 @@ const url = process.env.ADDRESS;
 module.exports = {
   login: (req, res) => {
     const state = generateRandomString(16);
-    res.cookie('spotifyAuthState', state);
-
     res.json({
       url: `https://accounts.spotify.com/authorize?${querystring.stringify({
         client_id: process.env.CLIENT_ID,

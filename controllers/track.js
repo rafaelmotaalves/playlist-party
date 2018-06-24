@@ -47,7 +47,7 @@ module.exports = {
         uri: track.uri,
         artists: track.artists.map(artist => artist.name),
       }))))
-      .catch(err => res.json(err.data));
+      .catch(err => console.log(err.response.data));
   },
 
 };

@@ -8,11 +8,16 @@ import { CallbackComponent } from './callback/calllback.component';
 import { PlayListFormComponent } from './form/playlistForm.component';
 import { FormsModule } from '@angular/forms';
 import { TrackFormComponent } from './form/trackForm.component';
-
+import { HomeComponent } from './home/home.component';
+import { PlaylistComponent } from './playlist/playlist.component';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
+  { path: '' , component: HomeComponent},
   { path: 'callback', component: CallbackComponent },
   { path: 'playlists', component: PlayListFormComponent},
+  { path: 'playlists/:id', component: PlaylistComponent},
+  { path: 'login', component: LoginComponent},
 ];
 
 @NgModule({
@@ -20,7 +25,10 @@ const appRoutes: Routes = [
     AppComponent,
     CallbackComponent,
     PlayListFormComponent,
-    TrackFormComponent
+    TrackFormComponent,
+    HomeComponent,
+    PlaylistComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

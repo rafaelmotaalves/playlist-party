@@ -1,17 +1,22 @@
+<div class="container">
 
-<div class = "container">
-   <h1>Create Playlist</h1>
-   <form>
-         <label for = "productid">Name</label>
-      <div class = "form-group">
-         <input (keydown) = 'getTracks( model.query + ($event.key.length > 1 ? "": $event.key))' type = "text" class = "form-control" id = "productid" required
-            [(ngModel)] = "model.query" name = "id">
+  <div class = "container">
+     <form>
+        <div class = "form-group">
+           <input autocomplete="off" (keydown) = 'searchTracks( model.query + ($event.key.length > 1 ? "": $event.key))' type = "text" class = "form-control" id = "productid" required
+              [(ngModel)] = "model.query" name = "id">
+        </div>
+     </form>
+  </div>
+
+  <ul *ngIf = 'tracks.length > 0'>
+    <div class="row search" *ngFor = 'let track of tracks'>
+      <div class="col-lg-11 col-sm-10">
+        {{track.name}} - <strong>{{track.artists}}</strong>
       </div>
-   </form>
+      <div class="col-lg-1 col-sm-2">    
+        <button class="btn btn-success btn-sm" (click) = 'addTrack(playlistId, track.uri, track)' >+</button>
+      </div>
+    </div>
+  </ul>
 </div>
-
-<ul *ngIf = 'tracks.length > 0'>
-  <li *ngFor = 'let track of tracks'>
-    {{track.name}} - <strong>{{track.artists[0]}}</strong>
-  </li>
-</ul>

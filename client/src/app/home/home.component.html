@@ -1,0 +1,19 @@
+<div class="container playlists">
+    <h3>Suas Playlists: </h3>
+    <div class="playlist" *ngFor = 'let playlist of playlists' (click) = " this.router.navigate(['/playlists', playlist._id])">
+      <div class="row">
+        
+        <div class="col-lg-1">
+          <img src ="{{playlist.img}}"> 
+        </div>
+
+        <div class="col-lg-10">
+          {{playlist.name}}
+          <p >
+            {{playlist.description}}
+          </p>
+        </div>
+        
+      </div>
+    </div>
+</div>

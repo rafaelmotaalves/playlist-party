@@ -1,21 +1,21 @@
 
 <div class = "container">
-   <h1>Create Playlist</h1>
-   <form>
-         <label for = "productid">Name</label>
+   <form >
       <div class = "form-group">
+         <label for = "productid">Name</label>
          <input type = "text" class = "form-control" id = "productid" required
             [(ngModel)] = "model.name" name = "id">
       </div>
       
-         <label for = "name">Description</label>
       <div class = "form-group">
-         <input type = "text"  class = "form-control" id = "name"
+         <label for = "name">Description</label>
+         <textarea type = "text"  class = "form-control" id = "name"
             [(ngModel)] = "model.description" name = "name">
+          </textarea>
       </div>
       
       <div class="form-group">
-        <input type="submit" (click) = "playlist.createPlaylist(model.name, model.description)">
+        <input class="btn btn-success" type="submit" (click) = "playlist.createPlaylist(model.name, model.description)">
       </div>
    </form>
 </div>

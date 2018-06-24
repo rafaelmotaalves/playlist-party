@@ -1,0 +1,22 @@
+.playlists {
+  margin-top: 5%;
+}
+
+img {
+  margin-top: 1px; 
+  padding: 10px;
+  height: 100px;
+}
+
+.playlist {
+  border: 1px white border;
+}
+
+.playlist:hover {
+  background: #5d5d60;
+}
+
+
+p {
+  font-size: 12px;
+}

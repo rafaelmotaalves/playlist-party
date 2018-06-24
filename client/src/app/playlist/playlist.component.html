@@ -1,0 +1,18 @@
+<div class="container">
+  <div><h1>{{playlist.name}}</h1></div>
+  <div class = 'row'>
+    <div class="col-lg-4">
+      <img src="{{playlist.image}}">
+    </div>
+    <div class="col-lg-8">
+      <div *ngFor = "let track of playlist.tracks">
+            {{track.name}} - <strong>{{track.artists}}</strong>
+            <p class="album">
+              {{track.album}}
+            </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-track (addTrackEvent) = 'receiveTrack($event)' [playlistId] = "playlistId"></app-track>

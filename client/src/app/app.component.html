@@ -1,16 +1,1 @@
-<h1>{{title}}</h1>
-
-<div>
-  <h4>Auth Functions</h4>
-  <button *ngIf = '!isLoggedIn()' (click) = "this.auth.login()">login</button>
-  <button *ngIf = 'isLoggedIn()'(click) = "this.auth.logout()">logout</button>
-</div>
-<hr>
 <router-outlet></router-outlet>
-<div *ngIf = 'this.cookie.getObject("auth")'>
-  <div *ngIf = '!url.includes("playlists")'>  
-    <a type = 'button' href="/playlists">create Playlist</a>
-  </div>
-
-</div>
-<track-form></track-form>  

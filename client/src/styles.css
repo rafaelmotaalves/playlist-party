@@ -2,3 +2,13 @@
 input {
   margin: 5px;
 }
+
+li {
+  transition: height 1s;
+}
+
+body {
+  background-color: #1a1a1c;
+  color: white;
+}
+

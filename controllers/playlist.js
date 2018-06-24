@@ -4,23 +4,24 @@ const axios = require('axios');
 
 module.exports = {
   getPlaylists: (req, res) => {
-    Playlist.find({ owner: req.auth.id })
-      .then(foundPlaylists => res.send(foundPlaylists));
+    Playlist.find({ owner: req.query.id })
+      .then(foundPlaylists => res.json(foundPlaylists));
   },
 
   addTrackToPlaylist: (req, res) => {
     const params = {
       uris: [],
     };
+    const auth = req.headers.authorization;
     params.uris.push(req.params.track_id);
     Playlist.findById(req.params.playlist_id)
-      .then(foundPlaylist => axios.post(`https://api.spotify.com/v1/users/${req.auth.id}/playlists/${foundPlaylist.spotifyId}/tracks`, params, {
+      .then(foundPlaylist => axios.post(`https://api.spotify.com/v1/users/${req.query.id}/playlists/${foundPlaylist.spotifyId}/tracks`, params, {
         headers: {
-          Authorization: `Bearer ${req.auth.accessToken}`,
+          Authorization: auth,
           'content-type': 'application/json',
         },
       }))
-      .then(() => res.redirect('back'))
+      .then(response => res.json(response.data))
       .catch(err => console.log(err));
   },
 
@@ -60,32 +61,38 @@ module.exports = {
       .catch(err => console.log(err));
   },
 
-  showPlaylist: (req, res) => {
-    Playlist.findById(req.params.playlist_id)
-      .then(foundPlaylist => axios.get(`https://api.spotify.com/v1/users/${req.auth.id}/playlists/${foundPlaylist.spotifyId}`, {
+  showPlaylist: async (req, res) => {
+    const auth = req.headers.authorization;
+    try {
+      const foundPlaylist = await Playlist.findById(req.params.playlist_id);
+      axios.get(`https://api.spotify.com/v1/users/${req.query.id}/playlists/${foundPlaylist.spotifyId}`, {
         headers: {
-          Authorization: `Bearer ${req.auth.accessToken}`,
+          Authorization: auth,
           'content-type': 'application/json',
         },
-      }))
-      .then((response) => {
-        const refactoredTracks = response.data.tracks.items.map(tracks => ({
-          name: tracks.track.name,
-          uri: tracks.track.uri,
-          album: tracks.track.album.name,
-          artists: tracks.track.artists[0].name,
-        }));
-        res.json({
-          name: response.data.name,
-          image: response.data.images[1] ? response.data.images[1].url : null,
-          owner: {
-            name: response.data.owner.display_name,
-            id: response.data.owner.id,
-          },
-          tracks: refactoredTracks,
-        });
       })
-      .catch(err => console.log(err));
+        .then((response) => {
+          const refactoredTracks = response.data.tracks.items.map(tracks => ({
+            name: tracks.track.name,
+            uri: tracks.track.uri,
+            album: tracks.track.album.name,
+            artists: tracks.track.artists[0].name,
+          }));
+          foundPlaylist.img = response.data.images[1] ? response.data.images[1].url : null;
+          res.json({
+            name: response.data.name,
+            image: foundPlaylist.img,
+            owner: {
+              name: response.data.owner.display_name,
+              id: response.data.owner.id,
+            },
+            tracks: refactoredTracks,
+          });
+        })
+        .then(() => foundPlaylist.save());
+    } catch (err) {
+      console.log(err);
+    }
   },
 
 };

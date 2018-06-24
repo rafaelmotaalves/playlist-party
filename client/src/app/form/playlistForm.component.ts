@@ -5,6 +5,7 @@ import { PlaylistService } from '../services/playlist.service';
 @Component({
   selector: 'playlist-form',
   templateUrl: 'playlistForm.component.html',
+  styleUrls: ['./playlistForm.component.css'],
   providers: [AuthService],
 })
 
