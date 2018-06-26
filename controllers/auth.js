@@ -23,6 +23,25 @@ module.exports = {
     });
   },
 
+  refresh: (req, res) => {
+    const { refreshToken } = req.query;
+    const data = {
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+    };
+    axios.post('https://accounts.spotify.com/api/token', querystring.stringify(data), {
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+      },
+    })
+      .then(response => res.json({
+        accessToken: response.data.access_token,
+        expiresAt: Date.now() + response.data.expires_in,
+      }))
+      .catch(err => console.log(err));
+  },
+
   callback: (req, res) => {
     const { code, state, storedState } = req.query;
     const authOptions = {

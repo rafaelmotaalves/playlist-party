@@ -17,16 +17,30 @@ export class AppComponent {
   url: string = window.location.href;
 
   constructor(
-    private auth: AuthService,
-    private playlist: PlaylistService,
-    private cookie: CookieService,
-    private tracks: TracksService,
-    private router: Router,
+    private _auth: AuthService,
+    private _playlist: PlaylistService,
+    private _cookie: CookieService,
+    private _tracks: TracksService,
+    private _router: Router,
   ) {}
 
   ngOnInit() {
-    if (!this.auth.isLoggedIn() && !window.location.href.includes('callback')) {
-      this.router.navigate(['/login']);
+    if (this._auth.isLoggedIn()) {
+      const auth: any = this._cookie.getObject('auth');
+      if (auth.expiresAt < Date.now()) {
+        this._auth.refresh(auth.refreshToken)
+          .subscribe((newAuth) => {
+            auth.accessToken = newAuth.accessToken;
+            auth.expiresAt = newAuth.expiresAt;
+            console.log(auth);
+            return this._cookie.putObject(auth, 'auth');
+          });
+      }
+    } else {
+      const route = window.location.href.split('/')[3];
+      if (!route.includes('callback')) {
+        this._router.navigate(['/login']);
+      }
     }
   }
 

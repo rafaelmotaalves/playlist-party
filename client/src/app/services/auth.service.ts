@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
+
 
 @Injectable()
 
@@ -35,8 +37,12 @@ export class AuthService {
       });
   }
 
+  refresh(refreshToken) {
+    return this.http.get('http://localhost:3000/refresh?refreshToken=' + refreshToken)
+      .pipe(map(data => data.json()));
+  }
+
   logout() {
-    console.log(this.cookie.getObject('auth'));
     this.cookie.remove('auth');
     this.router.navigate(['']);
   }
