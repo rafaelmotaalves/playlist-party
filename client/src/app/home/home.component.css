@@ -8,15 +8,20 @@ img {
   height: 100px;
 }
 
-.playlist {
-  border: 1px white border;
+.name {
+  text-decoration: none;
+  color: white;
 }
 
-.playlist:hover {
-  background: #5d5d60;
+.playlist {
+  border-bottom: 1px white solid;
 }
 
 
 p {
   font-size: 12px;
+}
+
+button {
+  margin-top: 10%;
 }

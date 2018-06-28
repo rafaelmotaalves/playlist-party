@@ -1,16 +1,16 @@
 
 <div class = "container">
    <form >
+
+    <h2>Create Playlist</h2>
       <div class = "form-group">
-         <label for = "productid">Name</label>
          <input type = "text" class = "form-control" id = "productid" required
-            [(ngModel)] = "model.name" name = "id">
+            [(ngModel)] = "model.name" name = "id" placeholder="Playlist name" autocomplete=off>
       </div>
       
       <div class = "form-group">
-         <label for = "name">Description</label>
          <textarea type = "text"  class = "form-control" id = "name"
-            [(ngModel)] = "model.description" name = "name">
+            [(ngModel)] = "model.description" name = "name" placeholder="Playlist description" autocomplete=off>
           </textarea>
       </div>
       

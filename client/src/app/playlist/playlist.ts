@@ -6,3 +6,4 @@ export interface Playlist {
   owner: string;
   tracks: [{ name: string, album: string, artists: string, uri: string }];
 };
+

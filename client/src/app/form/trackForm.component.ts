@@ -27,6 +27,8 @@ export class TrackFormComponent {
 
   playlist = {};
 
+
+
   searchTracks(query: string) {
     if (query.length <  2) {
       this.tracks = [];
@@ -36,8 +38,9 @@ export class TrackFormComponent {
     }
   }
 
-  addTrack(id, trackUri, track) {
-    this._playlist.addTrack(id, trackUri);
+  addTrack(track) {
+    this._playlist.addTrack(this.playlistId, track.uri);
+    this.tracks = [];
     this.addTrackEvent.emit(track);
   }
 

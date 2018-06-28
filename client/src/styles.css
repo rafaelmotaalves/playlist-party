@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-input {
-  margin: 5px;
+.form-control, .form-control:focus {
+  background-color: #222326;
+  color: white;
+
 }
 
 li {
@@ -8,7 +10,8 @@ li {
 }
 
 body {
-  background-color: #1a1a1c;
+  background-color: #222326;
   color: white;
+  font-family: 'Gotham';
 }
 

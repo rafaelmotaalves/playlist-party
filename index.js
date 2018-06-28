@@ -18,13 +18,8 @@ const trackRoutes = require('./routes/track');
 // set up view engine as ejs
 app.set('view engine', 'ejs');
 
-const home = (req, res) => {
-  res.render('index.ejs', { name: req.auth.name, img: req.auth.img });
-};
-
 app.use('/', authRoutes);
 app.use('/', trackRoutes);
-app.get('/', home);
 app.use('/playlists', playlistRoutes);
 
-app.listen(3000);
+app.listen(3000, () => console.log('Listening on port 3000'));

@@ -1,18 +1,48 @@
-<div class="container">
-  <div><h1>{{playlist.name}}</h1></div>
-  <div class = 'row'>
-    <div class="col-lg-4">
-      <img src="{{playlist.image}}">
+  
+<header class="row">
+    <div class="col-lg-3">
+        <img src="{{playlist.image || 'https://blog.stylingandroid.com/wp-content/themes/lontano-pro/images/no-image-slide.png'}}">
     </div>
-    <div class="col-lg-8">
-      <div *ngFor = "let track of playlist.tracks">
-            {{track.name}} - <strong>{{track.artists}}</strong>
-            <p class="album">
-              {{track.album}}
-            </p>
+    <div class="col-lg-3">
+      <p style="font-size: 14px">PLAYLIST</p>
+      <h1>{{playlist.name}}</h1>
+      <div id = "info">
+        <p>
+          {{playlist.description}}
+        </p>
+        Created by: <span style="color:white">{{playlist.owner}}</span>
       </div>
     </div>
-  </div>
-</div>
+    <div class="col-lg-6">
+      <app-track (addTrackEvent) = 'receiveTrack($event)' [playlistId] = "playlistId"></app-track>
+    </div>
+    
+</header>
 
-<app-track (addTrackEvent) = 'receiveTrack($event)' [playlistId] = "playlistId"></app-track>
+  <div id="tracks">
+      <div class="row" style="color: #c9cacc">
+        <div class="col-lg-4">
+          TITLE
+        </div>
+        <div class="col-lg-4">
+          ARTIST
+        </div>
+        <div class="col-lg-4">
+          ALBUM
+        </div>
+      </div>
+    <div *ngFor = "let track of playlist.tracks">
+      <div class="row track" >
+        <div class="col-lg-4">
+          {{track.name}}
+        </div>
+        <div class="col-lg-4">
+          <strong>{{track.artists}}</strong>
+        </div>
+        <div class="col-lg-4">
+          {{track.album}}
+        </div>
+      </div>
+    </div>
+    
+  </div>

@@ -35,6 +35,6 @@ export class PlaylistComponent {
   }
 
   receiveTrack($track) {
-    this.playlist.tracks.push($track);
+    this.playlist.tracks.unshift($track);
   }
 }

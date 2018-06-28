@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 
+
 @Injectable()
 
 export class AuthService {
@@ -31,9 +32,8 @@ export class AuthService {
     console.log(url);
     return this.http.get(url)
       .subscribe(data => {
-        console.log(data.json());
         this.cookie.putObject('auth', data.json());
-        this.router.navigate(['']);
+        this.router.navigate(['playlists']);
       });
   }
 
@@ -44,7 +44,7 @@ export class AuthService {
 
   logout() {
     this.cookie.remove('auth');
-    this.router.navigate(['']);
+    this.router.navigate(['login']);
   }
 
   isLoggedIn(): boolean {

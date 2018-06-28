@@ -57,7 +57,7 @@ module.exports = {
 
   deletePlaylist: (req, res) => {
     Playlist.findByIdAndRemove(req.params.playlist_id)
-      .then(removedPlaylist => res.send(removedPlaylist))
+      .then(removedPlaylist => res.json(removedPlaylist))
       .catch(err => console.log(err));
   },
 
@@ -82,14 +82,13 @@ module.exports = {
           res.json({
             name: response.data.name,
             image: foundPlaylist.img,
-            owner: {
-              name: response.data.owner.display_name,
-              id: response.data.owner.id,
-            },
+            owner: response.data.owner.display_name,
+            description: foundPlaylist.description,
             tracks: refactoredTracks,
           });
         })
-        .then(() => foundPlaylist.save());
+        .then(() => foundPlaylist.save())
+        .catch(err => console.log(err.response.data));
     } catch (err) {
       console.log(err);
     }

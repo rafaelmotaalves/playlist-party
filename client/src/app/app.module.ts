@@ -13,9 +13,9 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
-  { path: '' , component: HomeComponent},
+  { path: 'playlists' , component: HomeComponent},
   { path: 'callback', component: CallbackComponent },
-  { path: 'playlists', component: PlayListFormComponent},
+  { path: 'playlists/new', component: PlayListFormComponent},
   { path: 'playlists/:id', component: PlaylistComponent},
   { path: 'login', component: LoginComponent},
 ];

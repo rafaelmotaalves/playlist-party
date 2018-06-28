@@ -5,3 +5,7 @@ form {
 textarea {
   height: 100px;
 }
+
+input {
+  margin: 0;
+}

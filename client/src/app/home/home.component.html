@@ -1,19 +1,25 @@
 <div class="container playlists">
-    <h3>Suas Playlists: </h3>
-    <div class="playlist" *ngFor = 'let playlist of playlists' (click) = " this.router.navigate(['/playlists', playlist._id])">
+    <h2>Suas Playlists: </h2>
+    <div class="playlist" *ngFor = 'let playlist of playlists'>
       <div class="row">
         
         <div class="col-lg-1">
-          <img src ="{{playlist.img}}"> 
+          <img src ="{{playlist.img || 'https://blog.stylingandroid.com/wp-content/themes/lontano-pro/images/no-image-slide.png'}}" (click) = 'router.navigate(["playlists/" + playlist._id ])'> 
         </div>
 
         <div class="col-lg-10">
-          {{playlist.name}}
+          <a class = 'name' href="/playlists/{{playlist._id}}">{{playlist.name}}</a>
           <p >
             {{playlist.description}}
           </p>
         </div>
+        <div class="col-lg-1">
+          <button (click) = '_playlist.deletePlaylist(playlist._id); playlists.splice(playlists.indexOf(playlist),1)' class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+        </div>
         
       </div>
     </div>
+
+    <button type="button" class="btn btn-success" (click) = 'router.navigate(["playlists/new"])'>Criar nova playlist</button>
+
 </div>

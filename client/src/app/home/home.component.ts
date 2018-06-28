@@ -13,15 +13,15 @@ import { AuthService } from '../services/auth.service';
 export class HomeComponent {
 
   constructor(
-    private auth: AuthService,
-    private router: Router,
-    private playlist: PlaylistService,
+    private _auth: AuthService,
+    private _router: Router,
+    private _playlist: PlaylistService,
   ) { }
 
   playlists;
 
   ngOnInit() {
-    this.playlist.getUserPlaylists()
-      .subscribe(data => { this.playlists = data; console.log(data)});
+    this._playlist.getUserPlaylists()
+      .subscribe(data => this.playlists = data);
   }
 }

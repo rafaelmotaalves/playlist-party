@@ -32,8 +32,7 @@ export class AppComponent {
           .subscribe((newAuth) => {
             auth.accessToken = newAuth.accessToken;
             auth.expiresAt = newAuth.expiresAt;
-            console.log(auth);
-            return this._cookie.putObject(auth, 'auth');
+            this._cookie.putObject('auth', auth);
           });
       }
     } else {

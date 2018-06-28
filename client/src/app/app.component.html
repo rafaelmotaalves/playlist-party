@@ -1,1 +1,13 @@
+<nav *ngIf = 'this._auth.isLoggedIn()' class="navbar navbar-light bg-light">
+  <div class="container">
+    <a href = 'playlists' class="navbar-brand mb-0 h1">Playlist-Party</a>
+    <div class="navbar-right">
+      <button class="btn  btn-outline-danger" (click) = 'this._auth.logout()'>
+        Logout
+      </button>
+    </div>
+    
+  </div>
+</nav>
+
 <router-outlet></router-outlet>

@@ -39,7 +39,7 @@ module.exports = {
         accessToken: response.data.access_token,
         expiresAt: Date.now() + response.data.expires_in,
       }))
-      .catch(err => console.log(err));
+      .catch(err => res.json({ type: 'unable-to-refresh-token', err }));
   },
 
   callback: (req, res) => {
@@ -75,7 +75,7 @@ module.exports = {
         })
         .catch(err => res.json(err));
     } else {
-      res.json('state-mismatch');
+      res.json({ type: 'state-mismatch' });
     }
   },
 

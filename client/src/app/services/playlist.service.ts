@@ -34,11 +34,10 @@ export class PlaylistService {
     const options = new RequestOptions({ headers: headers });
 
     return this.http.post('http://localhost:3000/playlists?id=' + auth.id, params, options)
-      .subscribe(data => console.log(data.json()));
+      .subscribe(data => this.router.navigate(['playlists/' + data.json()._id ]));
   }
 
   addTrack(playlist, uri) {
-    console.log('addTrack');
     const auth: any = this.cookie.getObject('auth');
 
     const headers = new Headers({
@@ -47,6 +46,19 @@ export class PlaylistService {
     const options = new RequestOptions({ headers: headers });
     return this.http.get(`http://localhost:3000/playlists/${playlist}/add/${uri}?id=` + auth.id, options)
       .subscribe(data => console.log(data.json()));
+  }
+
+  deletePlaylist(id) {
+    const auth: any = this.cookie.getObject('auth');
+    const headers = new Headers({
+      'Authorization': 'Bearer ' + auth.accessToken,
+    });
+    const options = new RequestOptions({ headers });
+    console.log(id);
+
+    return this.http.delete(`http://localhost:3000/playlists/${id}`)
+      .subscribe(data => console.log(data.json()));
+
   }
 
   showPlaylist(id) {
