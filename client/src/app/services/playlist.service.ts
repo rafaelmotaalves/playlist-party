@@ -15,7 +15,7 @@ export class PlaylistService {
 
   getUserPlaylists() {
     const auth: any = this.cookie.getObject('auth');
-    return this.http.get('http://localhost:3000/playlists?id=' + auth.id)
+    return this.http.get('http://localhost:8080/playlists?id=' + auth.id)
       .pipe(map(data => data.json()));
   }
 
@@ -33,7 +33,7 @@ export class PlaylistService {
     });
     const options = new RequestOptions({ headers: headers });
 
-    return this.http.post('http://localhost:3000/playlists?id=' + auth.id, params, options)
+    return this.http.post('http://localhost:8080/playlists?id=' + auth.id, params, options)
       .subscribe(data => this.router.navigate(['playlists/' + data.json()._id ]));
   }
 
@@ -44,7 +44,7 @@ export class PlaylistService {
       'Authorization': 'Bearer ' + auth.accessToken,
     });
     const options = new RequestOptions({ headers: headers });
-    return this.http.get(`http://localhost:3000/playlists/${playlist}/add/${uri}?id=` + auth.id, options)
+    return this.http.get(`http://localhost:8080/playlists/${playlist}/add/${uri}?id=` + auth.id, options)
       .subscribe(data => console.log(data.json()));
   }
 
@@ -56,7 +56,7 @@ export class PlaylistService {
     const options = new RequestOptions({ headers });
     console.log(id);
 
-    return this.http.delete(`http://localhost:3000/playlists/${id}`)
+    return this.http.delete(`http://localhost:8080/playlists/${id}`)
       .subscribe(data => console.log(data.json()));
 
   }
@@ -68,7 +68,7 @@ export class PlaylistService {
       'Authorization': 'Bearer ' + auth.accessToken,
     });
     const options = new RequestOptions({ headers });
-    return this.http.get(`http://localhost:3000/playlists/${id}?id=` + auth.id, options)
+    return this.http.get(`http://localhost:8080/playlists/${id}?id=` + auth.id, options)
       .pipe(map(data => data.json()));
   }
 }

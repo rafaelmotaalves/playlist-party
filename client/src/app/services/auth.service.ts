@@ -17,7 +17,7 @@ export class AuthService {
   ) { }
 
   login() {
-    return this.http.get('http://localhost:3000/login')
+    return this.http.get('http://localhost:8080/login')
       .subscribe(res => {
         const data = res.json();
         this.cookie.put('spotifyAuthState', data.state);
@@ -28,7 +28,7 @@ export class AuthService {
   callback(query) {
     const storedState = this.cookie.getObject('spotifyAuthState');
     this.cookie.remove('spotifyAuthState');
-    const url = 'http://localhost:3000/callback?' + query.replace('#_=_', '') + '&storedState=' + storedState;
+    const url = 'http://localhost:8080/callback?' + query.replace('#_=_', '') + '&storedState=' + storedState;
     console.log(url);
     return this.http.get(url)
       .subscribe(data => {
@@ -38,7 +38,7 @@ export class AuthService {
   }
 
   refresh(refreshToken) {
-    return this.http.get('http://localhost:3000/refresh?refreshToken=' + refreshToken)
+    return this.http.get('http://localhost:8080/refresh?refreshToken=' + refreshToken)
       .pipe(map(data => data.json()));
   }
 

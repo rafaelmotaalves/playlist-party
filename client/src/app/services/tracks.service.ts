@@ -23,7 +23,7 @@ export class TracksService {
       'content-type': 'application/x-www-form-urlencoded',
     });
     const options = new RequestOptions({ headers: headers });
-    return this.http.get('http://localhost:3000/tracks/search?q=' + query, options)
+    return this.http.get('http://localhost:8080/tracks/search?q=' + query, options)
       .pipe(map((data: Response) => data.json()));
   }
 }
